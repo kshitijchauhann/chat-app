@@ -4,7 +4,7 @@ import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
+import { useState } from 'react';
 
 const FirstInterface = () => (
   <> 
@@ -16,10 +16,25 @@ const FirstInterface = () => (
   </>
 );
 
-const SecondInterface = () => (
+const SecondInterface = () => {
+
+  const [inputValue, setInputValue] = useState('');
+  const [message, setMessage] = useState([]);
+
+  const messageValue = (event) => {
+    setInputValue(event.target.value);
+  }
+
+  const onButtonClick = (event) => {
+    if (event.key === 'Enter' && inputValue.trim() !== '') {
+      setMessage([inputValue, ...message]);
+      setInputValue('');
+    }
+  }
+  return (
   <>
     <Container maxWidth="sm">
-          <Box
+    <Box
       sx={{ 
         width: '45vh',
         height: '70vh',
@@ -27,32 +42,49 @@ const SecondInterface = () => (
         margin: '20px 10px 10px 27px',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
       }}
-    >
-    <Grid 
-      container 
-      direction="row"
-      justifyContent="space-between"
-      alignItems="center"
-    >
-      <Box>
-       <TextField id="filled-basic" label="Enter here.." variant="filled"/>      
+      >
+      <Box sx={{flexGrow: 1, display: 'flex', flexDirection: 'column-reverse', overflowY: 'auto', height: '100%'}}>
+        {message.map((msg, index) => (
+        <Box key={index} sx={{ mt: 1, p: 1, border: '1px solid grey', borderRadius: 1 }}>
+          {msg}
+        </Box>
+        ))}
       </Box>
-      <Box sx={{
-        width: '10vh',
-        height: '4vh',
-      }}>
-      <Button size="large"><DoubleArrowIcon></DoubleArrowIcon></Button>
-      </Box>
-  </Grid>
-</Box>
-</Container>
-  </>
-);
+      <Grid 
+        container 
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
+    >
+      <TextField 
+        fullWidth 
+        id="filled-basic" 
+        label="Enter here.." 
+        variant="filled" 
+        value={inputValue}
+        onChange={messageValue}
+        onKeyDown={onButtonClick}
+      />      
 
-function App() {
-  return <SecondInterface />;
+      </Grid>
+    </Box>
+  </Container>
+</>
+
+)
 }
+
+const App = () => {
+
+  return (
+    <>
+    <SecondInterface />
+    </>
+  )
+
+}
+
 
 export default App;
