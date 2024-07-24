@@ -5,16 +5,25 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import { useState } from 'react';
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
 
-const FirstInterface = () => (
-  <> 
-    <Box sx={{m: 5}}>
-      This Box uses MUI System props for quick customization.
-      <Button>Click Here to generate code</Button>
-      <TextField id="filled-basic" label="Paste your code here" variant="filled" />
-    </Box>
-  </>
-);
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBNSmllBgKhUuj7KZxpUPb8s6KF3P44mr0",
+  authDomain: "chat-app-647c4.firebaseapp.com",
+  databaseURL: "https://chat-app-647c4-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "chat-app-647c4",
+  storageBucket: "chat-app-647c4.appspot.com",
+  messagingSenderId: "176798339916",
+  appId: "1:176798339916:web:a460ffee409277981975e9",
+  measurementId: "G-8MKZP07WYL"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
 
 const SecondInterface = () => {
 
@@ -36,10 +45,10 @@ const SecondInterface = () => {
     <Container maxWidth="sm">
     <Box
       sx={{ 
-        width: '45vh',
-        height: '70vh',
+        width: '60vh',
+        height: '90vh',
         border: '2px solid grey',
-        margin: '20px 10px 10px 27px',
+        margin: '20px',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-end',
@@ -47,7 +56,7 @@ const SecondInterface = () => {
       >
       <Box sx={{flexGrow: 1, display: 'flex', flexDirection: 'column-reverse', overflowY: 'auto', height: '100%'}}>
         {message.map((msg, index) => (
-        <Box key={index} sx={{ mt: 1, p: 1, border: '1px solid grey', borderRadius: 1 }}>
+        <Box key={index} sx={{ mt: 1, p: 1,  borderRadius: 1 }}>
           {msg}
         </Box>
         ))}
@@ -80,7 +89,7 @@ const App = () => {
 
   return (
     <>
-    <SecondInterface />
+    <SecondInterface/>
     </>
   )
 
